@@ -1,0 +1,33 @@
+# Render deploy manifest for NestJS backend
+# See: https://render.com/docs/deploying-with-render-yaml
+
+services:
+  - type: web
+    name: nestjs-backend
+    env: node
+    region: oregon
+    plan: free
+    branch: main
+    # Build the backend inside the `back-end` folder
+    buildCommand: npm install --prefix back-end && npm --prefix back-end run build
+    # Start the production server (expects dist/main.js after build)
+    startCommand: npm --prefix back-end run start:prod
+    # Root directory for this service is the repo root; commands above delegate into back-end
+    envVars:
+      # DO NOT commit real secrets here. Set values in the Render dashboard or use Render secrets.
+      - key: DATABASE_URL
+        value: ""
+      - key: DB_HOST
+        value: ""
+      - key: DB_PORT
+        value: ""
+      - key: DB_USERNAME
+        value: ""
+      - key: DB_PASSWORD
+        value: ""
+      - key: DB_NAME
+        value: ""
+      - key: TYPEORM_SYNC
+        value: "false"
+      - key: FRONTEND_URL
+        value: "https://your-frontend.example.com"

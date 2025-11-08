@@ -8,11 +8,11 @@ services:
     region: oregon
     plan: free
     branch: main
-    # Build the backend inside the `back-end` folder
-    buildCommand: npm install --prefix back-end && npm --prefix back-end run build
+    # Build the backend (repository contains the backend at repository root)
+    buildCommand: npm install && npm run build
     # Start the production server (expects dist/main.js after build)
-    startCommand: npm --prefix back-end run start:prod
-    # Root directory for this service is the repo root; commands above delegate into back-end
+    startCommand: npm run start:prod
+    # This manifest is intended to be used when the repository contains the backend
     envVars:
       # DO NOT commit real secrets here. Set values in the Render dashboard or use Render secrets.
       - key: DATABASE_URL
